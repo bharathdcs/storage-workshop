@@ -2,6 +2,9 @@ export NFS_IMAGE=k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
 export NFS_SERVER=$(hostname -I|cut -d' ' -f1)
 export NFS_PATH=/data/volumes
 
+mkdir -p /data/volumes
+chmod 777 /data/volumes
+
 echo "Provision nfs storage class"
 
 oc apply -f - <<EOF

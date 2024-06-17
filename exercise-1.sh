@@ -35,6 +35,10 @@ spec:
       restartPolicy: Always
 EOF
 
-echo "Triggering the limits"
+echo "wait for deployment to start"
+oc wait --for=condition=Ready -l app=test-ephemeral
+
+sleep 5
+echo "Triggering the error"
 oc exec -it deploy/test-ephemeral -- bash -c "/usr/bin/dd if=/dev/zero of=/tmp/zerofile1 bs=15000 count=10000"
 
