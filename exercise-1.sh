@@ -36,7 +36,7 @@ spec:
 EOF
 
 echo "wait for deployment to start"
-oc wait --for=condition=Ready -l app=test-ephemeral
+oc wait --for=condition=Ready pod -l app=test-ephemeral
 
 sleep 5
 echo "Triggering the error"
