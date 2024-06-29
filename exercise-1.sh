@@ -38,7 +38,7 @@ EOF
 echo "wait for deployment to start"
 oc wait --for=condition=Ready pod -l app=test-ephemeral
 
-sleep 5
+sleep 15
 echo "Triggering the error"
 oc exec -it deploy/test-ephemeral -- bash -c "/usr/bin/dd if=/dev/zero of=/tmp/zerofile1 bs=15000 count=10000"
 
