@@ -10,3 +10,10 @@ spec:
   storageClassName: openshift-storage.noobaa.io
   generateBucketName: my-object-bucket-claim
 EOF
+
+
+oc get objectbucketclaims
+
+oc extract configmap/my-object-bucket-claim --to=-
+
+oc extract secret/my-object-bucket-claim --to=-
