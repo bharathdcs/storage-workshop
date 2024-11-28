@@ -26,9 +26,34 @@ oc get objectbucketclaims
 
 oc extract configmap/my-object-bucket-claim --to=-
 
-NOBAA_HOST=$(oc get route -n openshift-storage s3 -ojsonpath={.spec.host})
+export NOBAA_HOST=$(oc get route -n openshift-storage s3 -ojsonpath={.spec.host})
 
-AWS_ACCESS_KEY_ID=$(oc extract secret/my-object-bucket-claim --keys=AWS_ACCESS_KEY_ID --to=-)
+export AWS_ACCESS_KEY_ID=$(oc extract secret/my-object-bucket-claim --keys=AWS_ACCESS_KEY_ID --to=-)
 
-AWS_SECRET_ACCESS_KEY=$(oc extract secret/my-object-bucket-claim --keys=AWS_SECRET_ACCESS_KEY --to=-)
+export AWS_SECRET_ACCESS_KEY=$(oc extract secret/my-object-bucket-claim --keys=AWS_SECRET_ACCESS_KEY --to=-)
+
+export BUCKET_NAME=$(oc extract configmap/my-object-bucket-claim --keys=BUCKET_NAME --to=-)
+
+oc extract secret/router-ca -n openshift-ingress-operator --to=/tmp --confirm
+
+export AWS_CA_BUNDLE=/tmp/tls.crt
+
+aws s3 ls s3:// --endpoint-url "https://${NOBAA_HOST}"
+
+echo "Hello World" >> /tmp/Helloworld.txt
+
+echo "Upload a test file to noobaa endpoint" 
+
+aws s3 cp /tmp/Helloworld.txt s3://${BUCKET_NAME}  --endpoint-url "https://${NOBAA_HOST}" --no-verify-ssl
+
+sleep 60
+
+echo "Lets check if the file is uploaded"
+
+aws s3 ls s3://${BUCKET_NAME}  --endpoint-url "https://${NOBAA_HOST}"
+
+
+
+
+
 
