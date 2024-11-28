@@ -13,8 +13,7 @@ EOF
 
 echo "Wait for the creation of Object Bucket Claim"
 
-sleep(60)
-
+sleep 60
 
 oc get objectbucketclaims
 
