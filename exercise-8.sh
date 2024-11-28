@@ -20,7 +20,7 @@ EOF
 
 echo "Wait for the creation of Object Bucket Claim"
 
-sleep 60
+sleep 10
 
 oc get objectbucketclaims
 
@@ -46,7 +46,7 @@ echo "Upload a test file to noobaa endpoint"
 
 aws s3 cp /tmp/Helloworld.txt s3://${BUCKET_NAME}  --endpoint-url "https://${NOBAA_HOST}" --no-verify-ssl
 
-sleep 60
+sleep 10
 
 echo "Lets check if the file is uploaded"
 
