@@ -26,6 +26,9 @@ oc get objectbucketclaims
 
 oc extract configmap/my-object-bucket-claim --to=-
 
-oc extract secret/my-object-bucket-claim --to=-
-
 NOBAA_HOST=$(oc get route -n openshift-storage s3 -ojsonpath={.spec.host})
+
+AWS_ACCESS_KEY_ID=$(oc extract secret/my-object-bucket-claim --keys=AWS_ACCESS_KEY_ID --to=-)
+
+AWS_SECRET_ACCESS_KEY=$(oc extract secret/my-object-bucket-claim --keys=AWS_SECRET_ACCESS_KEY --to=-)
+
